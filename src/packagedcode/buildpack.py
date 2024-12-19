@@ -1,6 +1,13 @@
+#
+# Copyright (c) nexB Inc. and others. All rights reserved.
+# ScanCode is a trademark of nexB Inc.
 # SPDX-License-Identifier: Apache-2.0
+# See http://www.apache.org/licenses/LICENSE-2.0 for the license text.
+# See https://github.com/nexB/scancode-toolkit for support or download.
+# See https://aboutcode.org for more information about nexB OSS projects.
+#
 
-import tomlkit
+import toml
 from packagedcode import models
 from packageurl import PackageURL
 
@@ -21,7 +28,7 @@ class BuildpackHandler(models.DatafileHandler):
         Parse the buildpack.toml file at `location` and yield PackageData.
         """
         with open(location, "r", encoding="utf-8") as f:
-            data = tomlkit.parse(f.read())
+            data = toml.load(f)
 
         # Extract required fields
         api_version = data.get("api")
