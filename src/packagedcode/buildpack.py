@@ -34,30 +34,55 @@ class BuildpackHandler(models.DatafileHandler):
         api_version = data.get("api")
         buildpack = data.get("buildpack", {})
         if not buildpack:
-            return  # Skip files missing required fields
+            return
 
+        name = buildpack.get("name")
+        if not name:
+            return
+
+        # Initialize common package data
+        package_data = dict(
+            datasource_id=cls.datasource_id,
+            type=cls.default_package_type,
+            name=name,
+            version="unknown",
+            description=None,
+            homepage_url=None,
+            keywords=[],
+            declared_license_expression=None,
+            dependencies=[],
+        )
+
+        # Handle Paketo-specific fields if present
+        if "api" in data:
+            cls.handle_paketo_buildpack(data, buildpack, package_data)
+
+        # Handle Heroku-specific fields if present
+        elif "publish" in data and "Ignore" in data["publish"]:
+            cls.handle_heroku_buildpack(data, buildpack, package_data)
+
+        yield models.PackageData.from_data(package_data, package_only)
+
+    @staticmethod
+    def handle_paketo_buildpack(data, buildpack, package_data):
         buildpack_id = buildpack.get("id")
-        buildpack_version = buildpack.get("version", "unknown")
-        buildpack_name = buildpack.get("name")
+        if buildpack_id:
+            package_data["extra_data"] = {"id": buildpack_id}
 
-        if not (api_version and buildpack_id and buildpack_version and buildpack_name):
-            return  # Skip incomplete data
+        package_data.update({
+            "version": buildpack.get("version", "unknown"),
+            "description": buildpack.get("description"),
+            "homepage_url": buildpack.get("homepage"),
+            "keywords": buildpack.get("keywords", []),
+        })
 
-        # Optional fields
-        description = buildpack.get("description")
-        homepage_url = buildpack.get("homepage")
         licenses = buildpack.get("licenses", [])
-        keywords = buildpack.get("keywords", [])
+        license_expressions = [
+            license_entry.get("type") for license_entry in licenses if license_entry.get("type")
+        ]
+        if license_expressions:
+            package_data["declared_license_expression"] = " AND ".join(license_expressions)
 
-        # Parse licenses
-        license_expressions = []
-        for license_entry in licenses:
-            license_type = license_entry.get("type")
-            license_uri = license_entry.get("uri")
-            if license_type:
-                license_expressions.append(license_type)
-
-        # Parse dependencies from "metadata.dependencies"
         dependencies = []
         metadata = data.get("metadata", {})
         metadata_dependencies = metadata.get("dependencies", [])
@@ -84,7 +109,6 @@ class BuildpackHandler(models.DatafileHandler):
                     )
                 )
 
-        # Parse "order" section for additional dependencies
         orders = data.get("order", [])
         for order in orders:
             for group in order.get("group", []):
@@ -100,17 +124,20 @@ class BuildpackHandler(models.DatafileHandler):
                         )
                     )
 
-        package_data = dict(
-            datasource_id=cls.datasource_id,
-            type=cls.default_package_type,
-            name=buildpack_name,
-            version=buildpack_version,
-            description=description,
-            homepage_url=homepage_url,
-            keywords=keywords,
-            declared_license_expression=" AND ".join(license_expressions) if license_expressions else None,
-            dependencies=dependencies,
-            extra_data={"id": buildpack_id},  # Store the id in extra_data
-        )
+        package_data["dependencies"] = dependencies
 
-        yield models.PackageData.from_data(package_data, package_only)
+    @staticmethod
+    def handle_heroku_buildpack(data, buildpack, package_data):
+        publish_section = data.get("publish", {})
+        if "Ignore" in publish_section:
+            ignore_files = publish_section["Ignore"].get("files", [])
+            if ignore_files:  # Only add if files are found
+                package_data["extra_data"] = {"ignore_files": ignore_files}
+            else:
+                package_data["extra_data"] = {"ignore_files": []}
+        else:
+            package_data["extra_data"] = {"ignore_files": []}
+
+        # Add description for Heroku buildpack
+        package_data["description"] = f"Heroku buildpack for {buildpack.get('name')}"
+        

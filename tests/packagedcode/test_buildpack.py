@@ -20,6 +20,21 @@ from scancode_config import REGEN_TEST_FIXTURES
 class TestBuildpack(FileBasedTesting):
     test_data_dir = os.path.join(os.path.dirname(__file__), 'data')
 
+
+    def test_scanworks_on_buildpack_heroku_java(self):
+        test_file = self.get_test_loc('buildpack/heroku-buildpacks/heroku-buildpack-java/buildpack.toml')
+        expected_file = self.get_test_loc('buildpack/heroku-buildpacks/heroku-buildpack-java/expectedbuildpack.json')
+        result_file = self.get_temp_file('results.json')
+        run_scan_click(['--package', test_file, '--json-pp', result_file])
+        check_json_scan(expected_file, result_file, regen=REGEN_TEST_FIXTURES)
+
+    def test_scanworks_on_buildpack_heroku_php(self):
+        test_file = self.get_test_loc('buildpack/heroku-buildpacks/heroku-buildpack-php/buildpack.toml')
+        expected_file = self.get_test_loc('buildpack/heroku-buildpacks/heroku-buildpack-php/expectedbuildpack.json')
+        result_file = self.get_temp_file('results.json')
+        run_scan_click(['--package', test_file, '--json-pp', result_file])
+        check_json_scan(expected_file, result_file, regen=REGEN_TEST_FIXTURES)
+
     def test_scanworks_on_buildpack_paketo_dotnet_execute(self):
         test_file = self.get_test_loc('buildpack/paketo-buildpacks/dotnet-execute/buildpack.toml')
         expected_file = self.get_test_loc('buildpack/paketo-buildpacks/dotnet-execute/expectedbuildpack.json')
@@ -62,6 +77,60 @@ class TestBuildpack(FileBasedTesting):
         run_scan_click(['--package', test_file, '--json-pp', result_file])
         check_json_scan(expected_file, result_file, regen=REGEN_TEST_FIXTURES)
 
+    def test_parse_heroku_buildpack_java_toml(self):
+        test_file = self.get_test_loc('buildpack/heroku-buildpacks/heroku-buildpack-java/buildpack.toml')
+        result_packages = list(buildpack.BuildpackHandler.parse(test_file))
+        expected_packages = [
+            models.PackageData(
+                type=buildpack.BuildpackHandler.default_package_type,
+                datasource_id=buildpack.BuildpackHandler.datasource_id,
+                description="Heroku buildpack for Java",
+                name="Java",
+                version="unknown",
+                extra_data={
+                    "ignore_files": [
+                        "etc/",
+                        "spec/",
+                        "test/",
+                        ".gitignore",
+                        ".github/",
+                        "hatchet.json",
+                        "Gemfile",
+                        "Gemfile.lock"
+                    ]
+                }
+            )
+        ]
+        compare_package_results(expected_packages, result_packages)
+
+    def test_parse_heroku_buildpack_php_toml(self):
+        test_file = self.get_test_loc('buildpack/heroku-buildpacks/heroku-buildpack-php/buildpack.toml')
+        result_packages = list(buildpack.BuildpackHandler.parse(test_file))
+        expected_packages = [
+            models.PackageData(
+                type=buildpack.BuildpackHandler.default_package_type,
+                datasource_id=buildpack.BuildpackHandler.datasource_id,
+                description= "Heroku buildpack for PHP",
+                name="PHP",
+                version="unknown",
+                extra_data={
+                    "ignore_files": [
+                        ".github/",
+                        ".gitignore",
+                        ".rspec_parallel",
+                        "support/build/",
+                        "support/devcenter/",
+                        "test/",
+                        "Gemfile",
+                        "Gemfile.lock",
+                        "hatchet.json",
+                        "hatchet.lock",
+                        "requirements.txt"
+                    ]
+                }
+            )
+        ]
+        compare_package_results(expected_packages, result_packages)
 
     def test_parse_paketo_dotnet_execute_buildpack_toml(self):
         test_file = self.get_test_loc('buildpack/paketo-buildpacks/dotnet-execute/buildpack.toml')
