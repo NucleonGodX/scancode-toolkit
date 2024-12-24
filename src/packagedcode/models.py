@@ -583,14 +583,6 @@ class PackageData(IdentifiablePackageData):
         label='Download URL',
         help='A direct download URL.')
     
-    sbom_formats = List(
-        item_type=str,
-        label='SBOM Formats',
-        help='A list of supported SBOM formats output by the buildpack. '
-            'Supported values are the following media types: '
-            '"application/vnd.cyclonedx+json", "application/spdx+json", and "application/vnd.syft+json".'        
-    )
-
     size = Integer(
         default=None,
         label='download size',

@@ -48,7 +48,6 @@ class BuildpackHandler(models.DatafileHandler):
         homepage_url = buildpack.get("homepage")
         licenses = buildpack.get("licenses", [])
         keywords = buildpack.get("keywords", [])
-        sbom_formats = buildpack.get("sbom-formats", [])
 
         # Parse licenses
         license_expressions = []
@@ -109,7 +108,6 @@ class BuildpackHandler(models.DatafileHandler):
             description=description,
             homepage_url=homepage_url,
             keywords=keywords,
-            sbom_formats=sbom_formats,
             declared_license_expression=" AND ".join(license_expressions) if license_expressions else None,
             dependencies=dependencies,
             extra_data={"id": buildpack_id},  # Store the id in extra_data
