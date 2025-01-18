@@ -86,7 +86,7 @@ class TestBuildpack(FileBasedTesting):
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
                 description="Heroku buildpack for Java",
                 name="Java",
-                version="unknown",
+                version=None,
                 extra_data={
                     "ignore_files": [
                         "etc/",
@@ -112,7 +112,7 @@ class TestBuildpack(FileBasedTesting):
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
                 description= "Heroku buildpack for PHP",
                 name="PHP",
-                version="unknown",
+                version=None,
                 extra_data={
                     "ignore_files": [
                         ".github/",
@@ -140,7 +140,7 @@ class TestBuildpack(FileBasedTesting):
                 type=buildpack.BuildpackHandler.default_package_type,
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
                 name="dotnet-execute",
-                version="unknown",
+                version=None,
                 description="A buildpack for running the `dotnet execute` command for an app",
                 homepage_url="https://github.com/paketo-buildpacks/dotnet-execute",
                 keywords=["dotnet"],
@@ -257,7 +257,7 @@ class TestBuildpack(FileBasedTesting):
                     type=buildpack.BuildpackHandler.default_package_type,
                     datasource_id=buildpack.BuildpackHandler.datasource_id,
                     name="git",
-                    version="unknown",
+                    version=None,
                     homepage_url="https://github.com/paketo-buildpacks/git",
                     extra_data={
                         "api_version": "0.7",
@@ -415,7 +415,7 @@ class TestBuildpack(FileBasedTesting):
                 type=buildpack.BuildpackHandler.default_package_type,
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
                 name="source-removal",
-                version="unknown",
+                version=None,
                 extra_data={
                     "api_version": "0.7",
                     "id": "paketo-buildpacks/source-removal"

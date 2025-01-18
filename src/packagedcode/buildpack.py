@@ -3,14 +3,14 @@ from packagedcode import models
 from packageurl import PackageURL
 import yaml
 
-class BuildpackHandler(models.DatafileHandler):
+class BuildpackHandler(models.NonAssemblableDatafileHandler):
     """
     Handle buildpack.toml manifests.
     See https://buildpacks.io/ for details on buildpack format.
     """
     datasource_id = "buildpack_toml"
     path_patterns = ("*buildpack.toml",)
-    default_package_type = "buildpack"
+    default_package_type = "generic"
     description = "Cloud Native Buildpack manifest"
     documentation_url = "https://buildpacks.io/"
 
@@ -38,7 +38,7 @@ class BuildpackHandler(models.DatafileHandler):
             datasource_id=cls.datasource_id,
             type=cls.default_package_type,
             name=name,
-            version=buildpack.get("version", "unknown"),
+            version=buildpack.get("version"),
             description=buildpack.get("description"),
             homepage_url=buildpack.get("homepage"),
             keywords=buildpack.get("keywords", []),
@@ -67,7 +67,7 @@ class BuildpackHandler(models.DatafileHandler):
             package_data["extra_data"]["id"] = buildpack_id
 
         package_data.update({
-            "version": buildpack.get("version", "unknown"),
+            "version": buildpack.get("version"),
             "description": buildpack.get("description"),
             "homepage_url": buildpack.get("homepage"),
             "keywords": buildpack.get("keywords", []),
