@@ -3,7 +3,7 @@
     {
       "type": "buildpack",
       "namespace": null,
-      "name": "Paketo Buildpack for Git",
+      "name": "git",
       "version": "unknown",
       "qualifiers": {},
       "subpath": null,
@@ -36,19 +36,20 @@
       "is_private": false,
       "is_virtual": false,
       "extra_data": {
+        "api_version": "0.7",
         "id": "paketo-buildpacks/git"
       },
       "repository_homepage_url": null,
       "repository_download_url": null,
       "api_data_url": null,
-      "package_uid": "pkg:buildpack/Paketo%20Buildpack%20for%20Git@unknown?uuid=d949b01b-4db7-4fbd-a85b-c23ff707444d",
+      "package_uid": "pkg:buildpack/git@unknown?uuid=38efd32a-cce0-4e11-a483-740c9706dcb2",
       "datafile_paths": [
         "buildpack.toml"
       ],
       "datasource_ids": [
         "buildpack_toml"
       ],
-      "purl": "pkg:buildpack/Paketo%20Buildpack%20for%20Git@unknown"
+      "purl": "pkg:buildpack/git@unknown"
     }
   ],
   "dependencies": [],
@@ -60,7 +61,7 @@
         {
           "type": "buildpack",
           "namespace": null,
-          "name": "Paketo Buildpack for Git",
+          "name": "git",
           "version": "unknown",
           "qualifiers": {},
           "subpath": null,
@@ -94,6 +95,7 @@
           "is_private": false,
           "is_virtual": false,
           "extra_data": {
+            "api_version": "0.7",
             "id": "paketo-buildpacks/git"
           },
           "dependencies": [],
@@ -101,11 +103,11 @@
           "repository_download_url": null,
           "api_data_url": null,
           "datasource_id": "buildpack_toml",
-          "purl": "pkg:buildpack/Paketo%20Buildpack%20for%20Git@unknown"
+          "purl": "pkg:buildpack/git@unknown"
         }
       ],
       "for_packages": [
-        "pkg:buildpack/Paketo%20Buildpack%20for%20Git@unknown?uuid=d949b01b-4db7-4fbd-a85b-c23ff707444d"
+        "pkg:buildpack/git@unknown?uuid=38efd32a-cce0-4e11-a483-740c9706dcb2"
       ],
       "scan_errors": []
     }

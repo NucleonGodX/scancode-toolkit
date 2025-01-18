@@ -3,7 +3,7 @@
     {
       "type": "buildpack",
       "namespace": null,
-      "name": "Paketo Buildpack for Source Removal",
+      "name": "source-removal",
       "version": "unknown",
       "qualifiers": {},
       "subpath": null,
@@ -36,19 +36,20 @@
       "is_private": false,
       "is_virtual": false,
       "extra_data": {
+        "api_version": "0.7",
         "id": "paketo-buildpacks/source-removal"
       },
       "repository_homepage_url": null,
       "repository_download_url": null,
       "api_data_url": null,
-      "package_uid": "pkg:buildpack/Paketo%20Buildpack%20for%20Source%20Removal@unknown?uuid=24557330-563d-4a75-909f-b60c6e517a27",
+      "package_uid": "pkg:buildpack/source-removal@unknown?uuid=81503578-104e-4477-ab16-3a47b5948e37",
       "datafile_paths": [
         "buildpack.toml"
       ],
       "datasource_ids": [
         "buildpack_toml"
       ],
-      "purl": "pkg:buildpack/Paketo%20Buildpack%20for%20Source%20Removal@unknown"
+      "purl": "pkg:buildpack/source-removal@unknown"
     }
   ],
   "dependencies": [],
@@ -60,7 +61,7 @@
         {
           "type": "buildpack",
           "namespace": null,
-          "name": "Paketo Buildpack for Source Removal",
+          "name": "source-removal",
           "version": "unknown",
           "qualifiers": {},
           "subpath": null,
@@ -94,6 +95,7 @@
           "is_private": false,
           "is_virtual": false,
           "extra_data": {
+            "api_version": "0.7",
             "id": "paketo-buildpacks/source-removal"
           },
           "dependencies": [],
@@ -101,11 +103,11 @@
           "repository_download_url": null,
           "api_data_url": null,
           "datasource_id": "buildpack_toml",
-          "purl": "pkg:buildpack/Paketo%20Buildpack%20for%20Source%20Removal@unknown"
+          "purl": "pkg:buildpack/source-removal@unknown"
         }
       ],
       "for_packages": [
-        "pkg:buildpack/Paketo%20Buildpack%20for%20Source%20Removal@unknown?uuid=24557330-563d-4a75-909f-b60c6e517a27"
+        "pkg:buildpack/source-removal@unknown?uuid=81503578-104e-4477-ab16-3a47b5948e37"
       ],
       "scan_errors": []
     }

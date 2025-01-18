@@ -3,7 +3,7 @@
     {
       "type": "buildpack",
       "namespace": null,
-      "name": "Paketo Buildpack for Pipeline Builder Canary",
+      "name": "pipeline-builder-canary",
       "version": "{{.version}}",
       "qualifiers": {},
       "subpath": null,
@@ -26,31 +26,65 @@
       "vcs_url": null,
       "copyright": null,
       "holder": null,
-      "declared_license_expression": "Apache-2.0",
-      "declared_license_expression_spdx": null,
-      "license_detections": [],
+      "declared_license_expression": "apache-2.0",
+      "declared_license_expression_spdx": "Apache-2.0",
+      "license_detections": [
+        {
+          "license_expression": "apache-2.0",
+          "license_expression_spdx": "Apache-2.0",
+          "matches": [
+            {
+              "license_expression": "apache-2.0",
+              "license_expression_spdx": "Apache-2.0",
+              "from_file": "buildpack.toml",
+              "start_line": 1,
+              "end_line": 1,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 3,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+              "matched_text": "type: Apache-2.0"
+            }
+          ],
+          "identifier": "apache_2_0-d66ab77d-a5cc-7104-e702-dc7df61fe9e8"
+        }
+      ],
       "other_license_expression": null,
       "other_license_expression_spdx": null,
       "other_license_detections": [],
-      "extracted_license_statement": null,
+      "extracted_license_statement": "type: Apache-2.0",
       "notice_text": null,
       "source_packages": [],
       "is_private": false,
       "is_virtual": false,
       "extra_data": {
-        "id": "paketo-buildpacks/pipeline-builder-canary"
+        "api_version": "0.7",
+        "id": "paketo-buildpacks/pipeline-builder-canary",
+        "targets": [
+          {
+            "arch": "amd64",
+            "os": "linux"
+          },
+          {
+            "arch": "arm64",
+            "os": "linux"
+          }
+        ]
       },
       "repository_homepage_url": null,
       "repository_download_url": null,
       "api_data_url": null,
-      "package_uid": "pkg:buildpack/Paketo%20Buildpack%20for%20Pipeline%20Builder%20Canary@%7B%7B.version%7D%7D?uuid=5645b40a-3914-435b-af7a-ee5cafef162b",
+      "package_uid": "pkg:buildpack/pipeline-builder-canary@%7B%7B.version%7D%7D?uuid=7a83dfcf-fdad-49e3-8209-4c9fb61f751f",
       "datafile_paths": [
         "buildpack.toml"
       ],
       "datasource_ids": [
         "buildpack_toml"
       ],
-      "purl": "pkg:buildpack/Paketo%20Buildpack%20for%20Pipeline%20Builder%20Canary@%7B%7B.version%7D%7D"
+      "purl": "pkg:buildpack/pipeline-builder-canary@%7B%7B.version%7D%7D"
     }
   ],
   "dependencies": [
@@ -63,9 +97,13 @@
       "is_pinned": false,
       "is_direct": true,
       "resolved_package": {},
-      "extra_data": {},
-      "dependency_uid": "pkg:generic/apache-maven@3.9.9?uuid=75bc22b3-e9f7-4e63-b9a8-679269bbe48a",
-      "for_package_uid": "pkg:buildpack/Paketo%20Buildpack%20for%20Pipeline%20Builder%20Canary@%7B%7B.version%7D%7D?uuid=5645b40a-3914-435b-af7a-ee5cafef162b",
+      "extra_data": {
+        "cpes": [
+          "cpe:2.3:a:apache:maven:3.9.9:*:*:*:*:*:*:*"
+        ]
+      },
+      "dependency_uid": "pkg:generic/apache-maven@3.9.9?uuid=a65095cd-80f9-4020-89c5-4af80a1eaf07",
+      "for_package_uid": "pkg:buildpack/pipeline-builder-canary@%7B%7B.version%7D%7D?uuid=7a83dfcf-fdad-49e3-8209-4c9fb61f751f",
       "datafile_path": "buildpack.toml",
       "datasource_id": "buildpack_toml"
     }
@@ -78,7 +116,7 @@
         {
           "type": "buildpack",
           "namespace": null,
-          "name": "Paketo Buildpack for Pipeline Builder Canary",
+          "name": "pipeline-builder-canary",
           "version": "{{.version}}",
           "qualifiers": {},
           "subpath": null,
@@ -101,20 +139,54 @@
           "vcs_url": null,
           "copyright": null,
           "holder": null,
-          "declared_license_expression": "Apache-2.0",
-          "declared_license_expression_spdx": null,
-          "license_detections": [],
+          "declared_license_expression": "apache-2.0",
+          "declared_license_expression_spdx": "Apache-2.0",
+          "license_detections": [
+            {
+              "license_expression": "apache-2.0",
+              "license_expression_spdx": "Apache-2.0",
+              "matches": [
+                {
+                  "license_expression": "apache-2.0",
+                  "license_expression_spdx": "Apache-2.0",
+                  "from_file": "buildpack.toml",
+                  "start_line": 1,
+                  "end_line": 1,
+                  "matcher": "2-aho",
+                  "score": 100.0,
+                  "matched_length": 3,
+                  "match_coverage": 100.0,
+                  "rule_relevance": 100,
+                  "rule_identifier": "spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                  "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                  "matched_text": "type: Apache-2.0"
+                }
+              ],
+              "identifier": "apache_2_0-d66ab77d-a5cc-7104-e702-dc7df61fe9e8"
+            }
+          ],
           "other_license_expression": null,
           "other_license_expression_spdx": null,
           "other_license_detections": [],
-          "extracted_license_statement": null,
+          "extracted_license_statement": "type: Apache-2.0",
           "notice_text": null,
           "source_packages": [],
           "file_references": [],
           "is_private": false,
           "is_virtual": false,
           "extra_data": {
-            "id": "paketo-buildpacks/pipeline-builder-canary"
+            "api_version": "0.7",
+            "id": "paketo-buildpacks/pipeline-builder-canary",
+            "targets": [
+              {
+                "arch": "amd64",
+                "os": "linux"
+              },
+              {
+                "arch": "arm64",
+                "os": "linux"
+              }
+            ]
           },
           "dependencies": [
             {
@@ -126,18 +198,22 @@
               "is_pinned": false,
               "is_direct": true,
               "resolved_package": {},
-              "extra_data": {}
+              "extra_data": {
+                "cpes": [
+                  "cpe:2.3:a:apache:maven:3.9.9:*:*:*:*:*:*:*"
+                ]
+              }
             }
           ],
           "repository_homepage_url": null,
           "repository_download_url": null,
           "api_data_url": null,
           "datasource_id": "buildpack_toml",
-          "purl": "pkg:buildpack/Paketo%20Buildpack%20for%20Pipeline%20Builder%20Canary@%7B%7B.version%7D%7D"
+          "purl": "pkg:buildpack/pipeline-builder-canary@%7B%7B.version%7D%7D"
         }
       ],
       "for_packages": [
-        "pkg:buildpack/Paketo%20Buildpack%20for%20Pipeline%20Builder%20Canary@%7B%7B.version%7D%7D?uuid=5645b40a-3914-435b-af7a-ee5cafef162b"
+        "pkg:buildpack/pipeline-builder-canary@%7B%7B.version%7D%7D?uuid=7a83dfcf-fdad-49e3-8209-4c9fb61f751f"
       ],
       "scan_errors": []
     }

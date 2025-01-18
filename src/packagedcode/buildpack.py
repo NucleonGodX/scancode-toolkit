@@ -1,15 +1,7 @@
-#
-# Copyright (c) nexB Inc. and others. All rights reserved.
-# ScanCode is a trademark of nexB Inc.
-# SPDX-License-Identifier: Apache-2.0
-# See http://www.apache.org/licenses/LICENSE-2.0 for the license text.
-# See https://github.com/nexB/scancode-toolkit for support or download.
-# See https://aboutcode.org for more information about nexB OSS projects.
-#
-
 import toml
 from packagedcode import models
 from packageurl import PackageURL
+import yaml
 
 class BuildpackHandler(models.DatafileHandler):
     """
@@ -30,28 +22,33 @@ class BuildpackHandler(models.DatafileHandler):
         with open(location, "r", encoding="utf-8") as f:
             data = toml.load(f)
 
-        # Extract required fields
         api_version = data.get("api")
         buildpack = data.get("buildpack", {})
         if not buildpack:
             return
 
+        buildpack_id = buildpack.get("id")
         name = buildpack.get("name")
-        if not name:
-            return
 
+        if buildpack_id:
+            namespace, name = buildpack_id.split("/", 1)
+        
         # Initialize common package data
         package_data = dict(
             datasource_id=cls.datasource_id,
             type=cls.default_package_type,
             name=name,
-            version="unknown",
-            description=None,
-            homepage_url=None,
-            keywords=[],
-            declared_license_expression=None,
+            version=buildpack.get("version", "unknown"),
+            description=buildpack.get("description"),
+            homepage_url=buildpack.get("homepage"),
+            keywords=buildpack.get("keywords", []),
+            extracted_license_statement=None,
             dependencies=[],
+            extra_data={}
         )
+
+        if api_version:
+            package_data["extra_data"]["api_version"] = api_version
 
         # Handle Paketo-specific fields if present
         if "api" in data:
@@ -67,7 +64,7 @@ class BuildpackHandler(models.DatafileHandler):
     def handle_paketo_buildpack(data, buildpack, package_data):
         buildpack_id = buildpack.get("id")
         if buildpack_id:
-            package_data["extra_data"] = {"id": buildpack_id}
+            package_data["extra_data"]["id"] = buildpack_id
 
         package_data.update({
             "version": buildpack.get("version", "unknown"),
@@ -77,11 +74,14 @@ class BuildpackHandler(models.DatafileHandler):
         })
 
         licenses = buildpack.get("licenses", [])
-        license_expressions = [
-            license_entry.get("type") for license_entry in licenses if license_entry.get("type")
-        ]
-        if license_expressions:
-            package_data["declared_license_expression"] = " AND ".join(license_expressions)
+        if licenses:
+            license_statements = [
+                yaml.dump({"type": license_entry.get("type")}).strip() 
+                for license_entry in licenses
+                if license_entry.get("type")  
+            ]
+            package_data["extracted_license_statement"] = "\n".join(license_statements)
+
 
         dependencies = []
         metadata = data.get("metadata", {})
@@ -90,6 +90,12 @@ class BuildpackHandler(models.DatafileHandler):
             dep_purl = dep.get("purl")
             dep_name = dep.get("name")
             dep_version = dep.get("version")
+            dep_cpes = dep.get("cpes", [])
+            extra_data = {"cpes": dep_cpes} if dep_cpes else {}
+
+            if not dep_purl and dep_name and dep_version:
+                dep_purl = PackageURL(type="generic", name=dep_name, version=dep_version).to_string()
+
             if dep_purl:
                 dependencies.append(
                     models.DependentPackage(
@@ -97,15 +103,7 @@ class BuildpackHandler(models.DatafileHandler):
                         scope="runtime",
                         is_runtime=True,
                         is_optional=False,
-                    )
-                )
-            elif dep_name and dep_version:
-                dependencies.append(
-                    models.DependentPackage(
-                        purl=PackageURL(type="generic", name=dep_name, version=dep_version).to_string(),
-                        scope="runtime",
-                        is_runtime=True,
-                        is_optional=False,
+                        extra_data=extra_data,
                     )
                 )
 
@@ -126,18 +124,20 @@ class BuildpackHandler(models.DatafileHandler):
 
         package_data["dependencies"] = dependencies
 
+        targets = data.get("targets", [])
+        if targets:
+            package_data["extra_data"]["targets"] = targets
+
     @staticmethod
     def handle_heroku_buildpack(data, buildpack, package_data):
         publish_section = data.get("publish", {})
         if "Ignore" in publish_section:
             ignore_files = publish_section["Ignore"].get("files", [])
-            if ignore_files:  # Only add if files are found
-                package_data["extra_data"] = {"ignore_files": ignore_files}
+            if ignore_files:  
+                package_data["extra_data"]["ignore_files"] = ignore_files
             else:
-                package_data["extra_data"] = {"ignore_files": []}
+                package_data["extra_data"]["ignore_files"] = []
         else:
-            package_data["extra_data"] = {"ignore_files": []}
+            package_data["extra_data"]["ignore_files"] = []
 
-        # Add description for Heroku buildpack
         package_data["description"] = f"Heroku buildpack for {buildpack.get('name')}"
-        

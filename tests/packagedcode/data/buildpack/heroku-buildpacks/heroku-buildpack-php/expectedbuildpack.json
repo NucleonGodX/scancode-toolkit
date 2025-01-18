@@ -53,7 +53,7 @@
       "repository_homepage_url": null,
       "repository_download_url": null,
       "api_data_url": null,
-      "package_uid": "pkg:buildpack/PHP@unknown?uuid=62dfc37b-8be2-4509-87b3-5b5b25260da5",
+      "package_uid": "pkg:buildpack/PHP@unknown?uuid=e6f7b526-ad84-4897-b161-48a962b08a6f",
       "datafile_paths": [
         "buildpack.toml"
       ],
@@ -129,7 +129,7 @@
         }
       ],
       "for_packages": [
-        "pkg:buildpack/PHP@unknown?uuid=62dfc37b-8be2-4509-87b3-5b5b25260da5"
+        "pkg:buildpack/PHP@unknown?uuid=e6f7b526-ad84-4897-b161-48a962b08a6f"
       ],
       "scan_errors": []
     }

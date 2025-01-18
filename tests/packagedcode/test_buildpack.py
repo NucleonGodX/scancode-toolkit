@@ -139,13 +139,42 @@ class TestBuildpack(FileBasedTesting):
             models.PackageData(
                 type=buildpack.BuildpackHandler.default_package_type,
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
-                name="Paketo Buildpack for .NET Execute",
+                name="dotnet-execute",
                 version="unknown",
                 description="A buildpack for running the `dotnet execute` command for an app",
                 homepage_url="https://github.com/paketo-buildpacks/dotnet-execute",
                 keywords=["dotnet"],
-                declared_license_expression="Apache-2.0",
-                extra_data={"id": "paketo-buildpacks/dotnet-execute"}
+                declared_license_expression="apache-2.0",
+                declared_license_expression_spdx= "Apache-2.0",
+                extracted_license_statement= "type: Apache-2.0",
+                license_detections= [
+                    {
+                    "license_expression": "apache-2.0",
+                    "license_expression_spdx": "Apache-2.0",
+                    "matches": [
+                        {
+                        "license_expression": "apache-2.0",
+                        "license_expression_spdx": "Apache-2.0",
+                        "from_file": None,
+                        "start_line": 1,
+                        "end_line": 1,
+                        "matcher": "2-aho",
+                        "score": 100.0,
+                        "matched_length": 3,
+                        "match_coverage": 100.0,
+                        "rule_relevance": 100,
+                        "rule_identifier": "spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "matched_text": "type: Apache-2.0"
+                        }
+                    ],
+                    "identifier": "apache_2_0-d66ab77d-a5cc-7104-e702-dc7df61fe9e8"
+                    }
+                ],
+                extra_data={
+                    "api_version": "0.8",
+                    "id": "paketo-buildpacks/dotnet-execute"
+                }
             )
         ]
         compare_package_results(expected_packages, result_packages)
@@ -157,39 +186,86 @@ class TestBuildpack(FileBasedTesting):
             models.PackageData(
                 type=buildpack.BuildpackHandler.default_package_type,
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
-                name="Paketo Buildpack for Java Memory Assistant",
+                name="java-memory-assistant",
                 version="{{.version}}",
                 description="A Cloud Native Buildpack that installs the Java Memory Assistant agent",
                 homepage_url="https://github.com/paketo-buildpacks/java-memory-assistant",
                 keywords=["agent"],
-                declared_license_expression="Apache-2.0",
                 dependencies=[
                     models.DependentPackage(
                         purl="pkg:generic/sap-java-memory-assistant@0.5.0?arch=amd64",
                         scope="runtime",
                         is_runtime=True,
-                        is_optional=False
+                        is_optional=False,
+                        extra_data= {
+                        "cpes": [
+                        "cpe:2.3:a:sap:java-memory-assistant:0.5.0:*:*:*:*:*:*:*"
+                        ]
+                        }
                     )
                 ],
-                extra_data={"id": "paketo-buildpacks/java-memory-assistant"}
+                declared_license_expression="apache-2.0",
+                declared_license_expression_spdx= "Apache-2.0",
+                extracted_license_statement= "type: Apache-2.0",
+                license_detections= [
+                    {
+                    "license_expression": "apache-2.0",
+                    "license_expression_spdx": "Apache-2.0",
+                    "matches": [
+                        {
+                        "license_expression": "apache-2.0",
+                        "license_expression_spdx": "Apache-2.0",
+                        "from_file": None,
+                        "start_line": 1,
+                        "end_line": 1,
+                        "matcher": "2-aho",
+                        "score": 100.0,
+                        "matched_length": 3,
+                        "match_coverage": 100.0,
+                        "rule_relevance": 100,
+                        "rule_identifier": "spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "matched_text": "type: Apache-2.0"
+                        }
+                    ],
+                    "identifier": "apache_2_0-d66ab77d-a5cc-7104-e702-dc7df61fe9e8"
+                    }
+                ],
+                extra_data={
+                    "api_version": "0.7",
+                    "id": "paketo-buildpacks/java-memory-assistant",
+                    "targets": [
+                    {
+                        "arch": "amd64",
+                        "os": "linux"
+                    },
+                    {
+                        "arch": "arm64",
+                        "os": "linux"
+                    }
+                    ]
+                }
             )
         ]
         compare_package_results(expected_packages, result_packages)
 
     def test_parse_paketo_git_buildpack_toml(self):
-        test_file = self.get_test_loc('buildpack/paketo-buildpacks/git/buildpack.toml')
-        result_packages = list(buildpack.BuildpackHandler.parse(test_file))
-        expected_packages = [
-            models.PackageData(
-                type=buildpack.BuildpackHandler.default_package_type,
-                datasource_id=buildpack.BuildpackHandler.datasource_id,
-                name="Paketo Buildpack for Git",
-                version="unknown",
-                homepage_url="https://github.com/paketo-buildpacks/git",
-                extra_data={"id": "paketo-buildpacks/git"}
-            )
-        ]
-        compare_package_results(expected_packages, result_packages)
+            test_file = self.get_test_loc('buildpack/paketo-buildpacks/git/buildpack.toml')
+            result_packages = list(buildpack.BuildpackHandler.parse(test_file))
+            expected_packages = [
+                models.PackageData(
+                    type=buildpack.BuildpackHandler.default_package_type,
+                    datasource_id=buildpack.BuildpackHandler.datasource_id,
+                    name="git",
+                    version="unknown",
+                    homepage_url="https://github.com/paketo-buildpacks/git",
+                    extra_data={
+                        "api_version": "0.7",
+                        "id": "paketo-buildpacks/git"
+                    }
+                )
+            ]
+            compare_package_results(expected_packages, result_packages)
 
     def test_parse_paketo_opentelemetry_buildpack_toml(self):
         test_file = self.get_test_loc('buildpack/paketo-buildpacks/opentelemetry/buildpack.toml')
@@ -198,21 +274,65 @@ class TestBuildpack(FileBasedTesting):
             models.PackageData(
                 type=buildpack.BuildpackHandler.default_package_type,
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
-                name="Paketo Buildpack for OpenTelemetry",
+                name="opentelemetry",
                 version="{{.version}}",
                 description="A Cloud Native Buildpack that contributes and configures the OpenTelemetry Agent",
                 homepage_url="https://github.com/paketo-buildpacks/opentelemetry",
                 keywords=["java", "apm", "trace", "opentelemetry"],
-                declared_license_expression="Apache-2.0",
                 dependencies=[
                     models.DependentPackage(
                         purl="pkg:generic/opentelemetry-java@2.10.0",
                         scope="runtime",
                         is_runtime=True,
-                        is_optional=False
-                    )
+                        is_optional=False,
+                        extra_data= {
+                        "cpes": [
+                        "cpe:2.3:a:open-telemetry:opentelemetry-java-agent:2.10.0:*:*:*:*:*:*:*"
+                        ]
+                        }                    
+                        )
                 ],
-                extra_data={"id": "paketo-buildpacks/opentelemetry"}
+                declared_license_expression="apache-2.0",
+                declared_license_expression_spdx= "Apache-2.0",
+                extracted_license_statement= "type: Apache-2.0",
+                license_detections= [
+                    {
+                    "license_expression": "apache-2.0",
+                    "license_expression_spdx": "Apache-2.0",
+                    "matches": [
+                        {
+                        "license_expression": "apache-2.0",
+                        "license_expression_spdx": "Apache-2.0",
+                        "from_file": None,
+                        "start_line": 1,
+                        "end_line": 1,
+                        "matcher": "2-aho",
+                        "score": 100.0,
+                        "matched_length": 3,
+                        "match_coverage": 100.0,
+                        "rule_relevance": 100,
+                        "rule_identifier": "spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "matched_text": "type: Apache-2.0"
+                        }
+                    ],
+                    "identifier": "apache_2_0-d66ab77d-a5cc-7104-e702-dc7df61fe9e8"
+                    }
+                ],
+                extra_data={
+                    "api_version": "0.7",
+                    "id": "paketo-buildpacks/opentelemetry",
+                    "targets": [
+                    {
+                        "arch": "amd64",
+                        "os": "linux"
+                    },
+                    {
+                        "arch": "arm64",
+                        "os": "linux"
+                    }
+                    ]
+                }
             )
         ]
         compare_package_results(expected_packages, result_packages)
@@ -224,21 +344,65 @@ class TestBuildpack(FileBasedTesting):
             models.PackageData(
                 type=buildpack.BuildpackHandler.default_package_type,
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
-                name="Paketo Buildpack for Pipeline Builder Canary",
+                name="pipeline-builder-canary",
                 version="{{.version}}",
                 description="A Cloud Native Buildpack that provides/does nothing. For testing only.",
                 homepage_url="https://github.com/paketo-buildpacks/pipeline-builder-canary",
                 keywords=["nothing"],
-                declared_license_expression="Apache-2.0",
                 dependencies=[
                     models.DependentPackage(
                         purl="pkg:generic/apache-maven@3.9.9",
                         scope="runtime",
                         is_runtime=True,
-                        is_optional=False
+                        is_optional=False,
+                        extra_data= {
+                        "cpes": [
+                        "cpe:2.3:a:apache:maven:3.9.9:*:*:*:*:*:*:*"
+                        ]
+                        }
                     )
                 ],
-                extra_data={"id": "paketo-buildpacks/pipeline-builder-canary"}
+                declared_license_expression="apache-2.0",
+                declared_license_expression_spdx= "Apache-2.0",
+                extracted_license_statement= "type: Apache-2.0",
+                license_detections= [
+                    {
+                    "license_expression": "apache-2.0",
+                    "license_expression_spdx": "Apache-2.0",
+                    "matches": [
+                        {
+                        "license_expression": "apache-2.0",
+                        "license_expression_spdx": "Apache-2.0",
+                        "from_file": None,
+                        "start_line": 1,
+                        "end_line": 1,
+                        "matcher": "2-aho",
+                        "score": 100.0,
+                        "matched_length": 3,
+                        "match_coverage": 100.0,
+                        "rule_relevance": 100,
+                        "rule_identifier": "spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/spdx_license_id_apache-2.0_for_apache-2.0.RULE",
+                        "matched_text": "type: Apache-2.0"
+                        }
+                    ],
+                    "identifier": "apache_2_0-d66ab77d-a5cc-7104-e702-dc7df61fe9e8"
+                    }
+                ],
+                extra_data={
+                    "api_version": "0.7",
+                    "id": "paketo-buildpacks/pipeline-builder-canary",
+                    "targets": [
+                    {
+                        "arch": "amd64",
+                        "os": "linux"
+                    },
+                    {
+                        "arch": "arm64",
+                        "os": "linux"
+                    }
+                    ]
+                }
             )
         ]
         compare_package_results(expected_packages, result_packages)
@@ -250,9 +414,12 @@ class TestBuildpack(FileBasedTesting):
             models.PackageData(
                 type=buildpack.BuildpackHandler.default_package_type,
                 datasource_id=buildpack.BuildpackHandler.datasource_id,
-                name="Paketo Buildpack for Source Removal",
+                name="source-removal",
                 version="unknown",
-                extra_data={"id": "paketo-buildpacks/source-removal"}
+                extra_data={
+                    "api_version": "0.7",
+                    "id": "paketo-buildpacks/source-removal"
+                }
             )
         ]
         compare_package_results(expected_packages, result_packages)
