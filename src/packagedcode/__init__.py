@@ -76,8 +76,9 @@ APPLICATION_PACKAGE_DATAFILE_HANDLERS = [
     cocoapods.PodfileLockHandler,
     cocoapods.PodfileHandler,
 
-    conda.CondaYamlHandler,
+    conda.CondaMetaJsonHandler,
     conda.CondaMetaYamlHandler,
+    conda.CondaYamlHandler,
 
     conan.ConanFileHandler,
     conan.ConanDataHandler,
@@ -251,6 +252,12 @@ if on_linux:
 try:
     from go_inspector.binary import get_go_binary_handler
     APPLICATION_PACKAGE_DATAFILE_HANDLERS.append(get_go_binary_handler())
+except ImportError:
+    pass
+
+try:
+    from rust_inspector.packages import get_rust_binary_handler
+    APPLICATION_PACKAGE_DATAFILE_HANDLERS.append(get_rust_binary_handler())
 except ImportError:
     pass
 
