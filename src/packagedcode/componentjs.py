@@ -5,12 +5,12 @@ import yaml
 
 class ComponentJSONMetadataHandler(models.NonAssemblableDatafileHandler):
     """
-    Handle JSON metadata files for package analysis.
+    Handle component JSON metadata files for package analysis.
     """
     datasource_id = "json_metadata"
     path_patterns = ("*component.json",)
     default_package_type = "library"
-    description = "JSON package metadata file"
+    description = "component JSON package metadata file"
 
     @classmethod
     def parse(cls, location, package_only=False):
@@ -110,12 +110,8 @@ class ComponentJSONMetadataHandler(models.NonAssemblableDatafileHandler):
     @classmethod
     def _extract_license_statement(cls, data):
         """
-        Extract license statement similar to BuildpackHandler.
-        
-        Handles various license formats:
-        - Simple string license
-        - Multiple licenses
-        - Complex license strings
+        Extract license statement.
+
         """
         license_field = data.get('license')
         if not license_field:
