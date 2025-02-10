@@ -7,7 +7,7 @@
       "type": "file",
       "package_data": [
         {
-          "type": "library",
+          "type": "generic",
           "namespace": null,
           "name": "seedrandom",
           "version": "2.3.10",
@@ -80,8 +80,8 @@
           "repository_homepage_url": null,
           "repository_download_url": null,
           "api_data_url": null,
-          "datasource_id": "json_metadata",
-          "purl": "pkg:library/seedrandom@2.3.10"
+          "datasource_id": "component_json_metadata",
+          "purl": "pkg:generic/seedrandom@2.3.10"
         }
       ],
       "for_packages": [],

@@ -7,7 +7,7 @@
       "type": "file",
       "package_data": [
         {
-          "type": "library",
+          "type": "generic",
           "namespace": "kmalakoff",
           "name": "knockback",
           "version": "1.2.3",
@@ -116,8 +116,8 @@
           "repository_homepage_url": null,
           "repository_download_url": null,
           "api_data_url": null,
-          "datasource_id": "json_metadata",
-          "purl": "pkg:library/kmalakoff/knockback@1.2.3"
+          "datasource_id": "component_json_metadata",
+          "purl": "pkg:generic/kmalakoff/knockback@1.2.3"
         }
       ],
       "for_packages": [],

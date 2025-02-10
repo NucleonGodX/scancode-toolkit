@@ -7,7 +7,7 @@
       "type": "file",
       "package_data": [
         {
-          "type": "library",
+          "type": "generic",
           "namespace": "chaijs",
           "name": "chai",
           "version": "2.1.2",
@@ -133,8 +133,8 @@
           "repository_homepage_url": null,
           "repository_download_url": null,
           "api_data_url": null,
-          "datasource_id": "json_metadata",
-          "purl": "pkg:library/chaijs/chai@2.1.2"
+          "datasource_id": "component_json_metadata",
+          "purl": "pkg:generic/chaijs/chai@2.1.2"
         }
       ],
       "for_packages": [],
