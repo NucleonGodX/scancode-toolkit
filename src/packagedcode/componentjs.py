@@ -1,3 +1,12 @@
+#
+# Copyright (c) nexB Inc. and others. All rights reserved.
+# ScanCode is a trademark of nexB Inc.
+# SPDX-License-Identifier: Apache-2.0
+# See http://www.apache.org/licenses/LICENSE-2.0 for the license text.
+# See https://github.com/nexB/scancode-toolkit for support or download.
+# See https://aboutcode.org for more information about nexB OSS projects.
+#
+
 import json
 from packagedcode import models
 from packageurl import PackageURL
@@ -7,7 +16,7 @@ class ComponentJSONMetadataHandler(models.NonAssemblableDatafileHandler):
     """
     Handle component JSON metadata files for package analysis.
     """
-    datasource_id = "json_metadata"
+    datasource_id = "component_json_metadata"
     path_patterns = ("*component.json",)
     default_package_type = "library"
     description = "component JSON package metadata file"
@@ -43,15 +52,13 @@ class ComponentJSONMetadataHandler(models.NonAssemblableDatafileHandler):
         )
 
         if namespace and name:
-            try:
-                package_data['purl'] = PackageURL(
-                    type='generic', 
-                    namespace=namespace, 
-                    name=name, 
-                    version=package_data.get('version')
-                ).to_string()
-            except Exception:
-                pass
+            package_data['purl'] = PackageURL(
+                type='generic', 
+                namespace=namespace, 
+                name=name, 
+                version=package_data.get('version')
+            ).to_string()
+
 
         yield models.PackageData.from_data(package_data, package_only)
 
